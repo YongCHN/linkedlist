@@ -104,7 +104,6 @@ void reverse_list(LinkedList * list)
     LinkedListNode * headNode = list->head;
 
     LinkedListNode * currentNode = previousNode->next;
-    LinkedListNode * nextNode = NULL;
     while(currentNode != NULL)
     {
         LinkedListNode * nextNode = currentNode->next;
@@ -131,6 +130,45 @@ void clear_list(LinkedList * list)
     }
 
     list->head = NULL;
+}
+
+LinkedList * merge_list(LinkedList * list, LinkedList * anotherList)
+{
+    LinkedList * m = new LinkedList();
+    initializer_list(m);
+
+    LinkedListNode * head = list->head;
+    LinkedListNode * anotherHead = anotherList->head;
+
+    while(head != NULL && anotherHead != NULL)
+    {
+        int v1 = head->data;
+        int v2 = anotherHead->data;
+
+        if( v1 < v2)
+         {
+             insert_list(m, v1);
+             head = head->next;
+         }
+        else{
+            anotherHead = anotherHead->next;
+            insert_list(m, v2);
+        }
+    }
+
+    while(head != NULL)
+    {
+        insert_list(m, head->data);
+        head = head->next;
+    }
+
+    while(anotherHead != NULL)
+    {
+        insert_list(m, anotherHead->data);
+        anotherHead = anotherHead->next;
+    }
+
+    return m;
 }
 
 #endif // LINKEDLIST_H_INCLUDED
