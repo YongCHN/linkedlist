@@ -60,6 +60,33 @@ void insert_list(LinkedList * list, int data)
     }
 }
 
+
+
+void insert_list(LinkedList * list, LinkedListNode * node)
+{
+    node->next = NULL;
+    LinkedListNode * currentNode = list->head;
+    if(currentNode == NULL) list->head = node;
+    else{
+        while(currentNode->next != NULL)
+        {
+            currentNode = currentNode->next;
+        }
+        currentNode->next = node;
+    }
+}
+
+LinkedListNode * Get_Linked_List_Node(LinkedList * list, int pos)
+{
+    LinkedListNode * currentNode = list->head;
+    if(currentNode == NULL) return NULL;
+
+    LinkedListNode * targetNode = NULL;
+    while( --pos > 0 && (currentNode = currentNode->next) != NULL);
+
+    return currentNode;
+}
+
 LinkedListNode * recursive_reverse_list(LinkedListNode * prev, LinkedListNode * node)
 {
     LinkedListNode * head = NULL;
@@ -163,12 +190,18 @@ LinkedList * merge_list(LinkedList * list, LinkedList * anotherList)
     }
 
     while(anotherHead != NULL)
+
     {
         insert_list(m, anotherHead->data);
         anotherHead = anotherHead->next;
     }
 
     return m;
+}
+
+bool Has_Node_Crossed(LinkedList * l1, LinkedList * l2)
+{
+    return true;
 }
 
 #endif // LINKEDLIST_H_INCLUDED
