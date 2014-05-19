@@ -81,10 +81,26 @@ LinkedListNode * Get_Linked_List_Node(LinkedList * list, int pos)
     LinkedListNode * currentNode = list->head;
     if(currentNode == NULL) return NULL;
 
-    LinkedListNode * targetNode = NULL;
     while( --pos > 0 && (currentNode = currentNode->next) != NULL);
 
     return currentNode;
+}
+
+LinkedList * Clone_Linked_List(LinkedList * list)
+{
+    LinkedList * clone = NULL;
+    initializer_list(clone);
+
+    LinkedListNode * currentNode = list->head;
+
+    if(currentNode == NULL) return clone;
+
+    do
+    {
+        insert_list(clone, currentNode);
+    }while((currentNode = currentNode->next) != NULL );
+
+    return clone;
 }
 
 LinkedListNode * recursive_reverse_list(LinkedListNode * prev, LinkedListNode * node)
@@ -199,9 +215,36 @@ LinkedList * merge_list(LinkedList * list, LinkedList * anotherList)
     return m;
 }
 
-bool Has_Node_Crossed(LinkedList * l1, LinkedList * l2)
+
+LinkedListNode * Get_First_Common_Node(LinkedListNode * node_l1, LinkedListNode * node_l2)
 {
-    return true;
+    if(node_l1 == NULL || node_l2 == NULL) return NULL;
+
+    if( node_l1->next == NULL && node_l2->next == NULL)
+    {
+        if(node_l1 == node_l2) return node_l1;
+
+        return NULL;
+    }
+
+    LinkedListNode * nextL1Node = node_l1->next == NULL ? node_l1 : node_l1->next;
+    LinkedListNode * nextL2Node = node_l2->next == NULL ? node_l2 : node_l2->next;
+
+    LinkedListNode * crossed_node = NULL;
+
+    crossed_node = Get_First_Common_Node(nextL1Node, nextL2Node);
+
+    if(crossed_node != NULL)
+    {
+        if(node_l1 != node_l2)
+            return crossed_node;
+        else
+            return node_l1;
+    }
+
+    return NULL;
 }
+
+
 
 #endif // LINKEDLIST_H_INCLUDED
